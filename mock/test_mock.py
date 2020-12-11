@@ -8,7 +8,7 @@ def fake_random():
     return .5
 
 def fake_amplify_10(x):
-    return .5
+    return .05 * x
 
 class TestA:
     def test_01(self, mocker):
@@ -22,11 +22,10 @@ class TestA:
         def fake_random():
             return .5
 
-        try:
+        with pytest.raises(Exception) as excinfo:
             mocker.patch.object("some_file","random",fake_random)
             assert some_file.generate_random() == .5
-        except Exception as e:
-            print(e)
+        print(excinfo.value.args[0])
         
 
     def test_03(self, mocker):
@@ -43,7 +42,7 @@ class TestB:
 
     def test_01(self, mocker):
         mocker.patch.object(some_file,"amplify_10",fake_amplify_10)
-        assert some_file.process_10(random.random()) == .5
+        assert some_file.process_10(10) == .5
         print("amplify test")
 
 class TestC:
