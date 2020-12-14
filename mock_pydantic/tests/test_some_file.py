@@ -1,6 +1,6 @@
 from typing import List, Optional
 from pydantic import BaseModel, StrictStr, StrictInt, StrictBool
-import some_file
+import file
 
 
 class Name(BaseModel):
@@ -22,11 +22,11 @@ def check_data_struct(url,data=None):
 
 def test_evaluate(mocker):
     print(mocker.Mock)
-    mocker.patch.object(some_file, "format_info", mock_format_info)
+    mocker.patch.object(file, "format_info", mock_format_info)
 
     mock_requests = mocker.Mock()
     mock_requests.post = check_data_struct
-    mocker.patch.object(some_file, "requests", mock_requests)
+    mocker.patch.object(file, "requests", mock_requests)
 
     url = "xxxx"
     payload = {
@@ -51,7 +51,7 @@ def test_evaluate(mocker):
         ]
     }
     
-    some_file.send_info(url, payload)
+    file.send_info(url, payload)
     print("pass good")
 
 
